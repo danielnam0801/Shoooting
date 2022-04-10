@@ -26,9 +26,11 @@ public class BulletMove : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Enemy") || other.CompareTag("Square")){
+        if (other.CompareTag("Enemy") || other.CompareTag("Square"))
+        {
+            //other.GetComponent<Enemy>().OnDie();
             Destroy(gameObject);
         }
-            
+
     }
 }

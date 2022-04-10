@@ -1,10 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMove : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private string nextSceneName;
+    [SerializeField]
+    private StageData stageData;
+    [SerializeField]
+    private KeyCode keycodeAttack = KeyCode.Space;
+    private Weapon weapon;
+
+    private int score;
+    public int Score
+    {
+        set => score = Mathf.Max(0,value);
+        get => score;
+    }
+
     public float speed = 10f;
 
     private Rigidbody2D rb = null;
@@ -15,14 +31,24 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        weapon = GetComponent<Weapon>();
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(Shooting());
+
+        //StartCoroutine(Shooting());
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+        if (Input.GetKeyDown(keycodeAttack))
+        {
+            weapon.StartFiring();
+        }
+        else if (Input.GetKeyUp(keycodeAttack))
+        {
+            weapon.StopFiring();
+        }
     }
 
     private void Move()
@@ -36,14 +62,19 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = new Vector2(hori, verti).normalized * speed;
     }
 
-    private IEnumerator Shooting()
+    public void OnDie()
+    {
+        SceneManager.LoadScene(nextSceneName);
+    }
+
+    /*private IEnumerator Shooting()
     {
         while (true)
         {
             yield return new WaitForSeconds(shootDuration);
             Instantiate(bullet, transform.position, Quaternion.identity);
         }
-    }
+    }*/
 
 
 }   

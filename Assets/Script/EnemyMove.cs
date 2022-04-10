@@ -18,7 +18,7 @@ public class EnemyMove : BulletMove
     }
 
 
-    
+
     // Start is called before the first frame update
 
 }

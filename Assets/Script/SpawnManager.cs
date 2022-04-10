@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject player = null;
-    public GameObject bullet = null;
     public GameObject enemy = null;
     public float enemyDuration = 3f;
     public Vector3 spawnPos = Vector3.zero;
@@ -38,15 +37,6 @@ public class SpawnManager : MonoBehaviour
         float verti = Input.GetAxisRaw("Vertical");
 
         rb.velocity = new Vector2(hori, verti).normalized * 10f;
-    }
-
-
-    private void SpawnBullet()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Instantiate(bullet, rb.transform.position , Quaternion.identity);
-        }
     }
 
     private IEnumerator SpawnEnemy()
